@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: 12.x
           registry-url: "https://npm.pkg.github.com"
+          scope: "@octocat"
 
       - name: Use cached node_modules
         uses: actions/cache@v2
