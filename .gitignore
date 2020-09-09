@@ -1,0 +1,10 @@
+**/.*
+/*
+!/src/
+!/test/
+!/.github/
+!/tsconfig.json
+!/package.json
+!/README.md
+!/.gitignore
+!/LICENSE
