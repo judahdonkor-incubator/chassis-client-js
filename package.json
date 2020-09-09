@@ -29,7 +29,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "chassis-client-js",
+  "name": "@judahdonkor-incubator/chassis-client-js",
   "author": "Judah Donkor",
   "module": "dist/chassis-client-js.esm.js",
   "devDependencies": {
