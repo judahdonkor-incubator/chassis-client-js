@@ -1,4 +1,4 @@
-import { Rs } from '.';
+import { Resource } from './rs';
 
 type Pagination = Record<'page' | 'size', number>;
 
@@ -70,18 +70,18 @@ interface Violation {
 }
 
 class Crud {
-  private rs: Rs;
-  constructor(rs: Rs) {
-    this.rs = rs;
+  private resource: Resource;
+  constructor(resource: Resource) {
+    this.resource = resource;
   }
   persist(mdl: string, entity: Entity): Promise<Entity> {
-    return this.rs('persist')({
+    return this.resource('persist')({
       mdl,
       entity,
     });
   }
   delete<K>(mdl: string, id: K): Promise<void> {
-    return this.rs('delete')({
+    return this.resource('delete')({
       mdl,
       id,
     });
@@ -89,7 +89,7 @@ class Crud {
   find(
     req: Pick<Request, 'mdl' | 'id' | 'name' | 'status' | 'where'>
   ): Promise<Entity> {
-    return this.rs('find')(req);
+    return this.resource('find')(req);
   }
   select(
     req: Pick<
@@ -104,7 +104,7 @@ class Crud {
       | 'pageSize'
     >
   ): Promise<PagedResponse<Entity>> {
-    return this.rs('select')({
+    return this.resource('select')({
       ...req,
     });
   }
@@ -113,20 +113,20 @@ class Crud {
     id: K,
     status: V
   ): Promise<void> {
-    return this.rs('invokestate')({
+    return this.resource('invokestate')({
       mdl,
       id,
       status,
     });
   }
   validate(mdl: string, entity: Entity): Promise<Array<Violation>> {
-    return this.rs('validate')({
+    return this.resource('validate')({
       mdl,
       entity,
     });
   }
   enumerate(mdl: string): Promise<Array<Enum>> {
-    return this.rs('enum')(mdl);
+    return this.resource('enum')(mdl);
   }
 }
 

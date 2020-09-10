@@ -1,5 +1,5 @@
-import { Rs } from '.';
 import { Entity } from './crud';
+import { Resource } from './rs';
 
 type AppUser = Entity & {
   person: Entity;
@@ -16,14 +16,14 @@ type SignUpReq = Record<'email' | 'phone', string> & {
   appuser: AppUser;
 };
 
-class Exchanger {
-  private rs: Rs;
-  constructor(rs: Rs) {
-    this.rs = rs;
+class Exchange {
+  private resource: Resource;
+  constructor(resource: Resource) {
+    this.resource = resource;
   }
   token(tk: string): Promise<Token> {
     return new Promise((resolve, reject) => {
-      this.rs('tk')<Token, string>(tk)
+      this.resource('tk')<Token, string>(tk)
         .then(rsp => {
           resolve(rsp);
         })
@@ -33,7 +33,7 @@ class Exchanger {
     });
   }
   signOut(): Promise<void> {
-    return this.rs('sign-out')();
+    return this.resource('sign-out')();
   }
   signIn(
     credentials:
@@ -43,7 +43,7 @@ class Exchanger {
       | Pick<Credentials, 'phone' | 'token'>
   ): Promise<Token> {
     return new Promise((resolve, reject) => {
-      this.rs('sign-in')<Token, typeof credentials>(credentials)
+      this.resource('sign-in')<Token, typeof credentials>(credentials)
         .then(rsp => {
           resolve(rsp);
         })
@@ -55,11 +55,11 @@ class Exchanger {
   otp(
     credentials: Pick<Credentials, 'email'> | Pick<Credentials, 'phone'>
   ): Promise<void> {
-    return this.rs('otp')(credentials);
+    return this.resource('otp')(credentials);
   }
   resetPassword(password: string): Promise<void> {
-    return this.rs('rst-pwd')(password);
+    return this.resource('rst-pwd')(password);
   }
 }
 
-export { Exchanger, AppUser, Token, Credentials, SignUpReq };
+export { Exchange, AppUser, Token, Credentials, SignUpReq };
