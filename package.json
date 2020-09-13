@@ -18,6 +18,11 @@
     "prepare": "tsdx build"
   },
   "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint --fix"
+    }
+  },
   "prettier": {
     "printWidth": 80,
     "semi": true,

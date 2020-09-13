@@ -37,9 +37,9 @@ type OpSchema = Record<'svc' | 'op', string> &
 type SchemaReq =
   | string
   | {
-    op: string;
-    svc: string | string[];
-  };
+      op: string;
+      svc: string | string[];
+    };
 
 type Resource = {
   (op: string, ...svc: string[]): <R = void, T = undefined>(
@@ -47,14 +47,27 @@ type Resource = {
   ) => Promise<R>;
 };
 
-type ReportFormat = 'txt' | 'json' | 'xml' | 'html' | 'rtf' | 'csv' | 'odt' | 'ods' | 'docx' | 'pptx' | 'pdf' | 'xlsx' | 'xls'
+type ReportFormat =
+  | 'txt'
+  | 'json'
+  | 'xml'
+  | 'html'
+  | 'rtf'
+  | 'csv'
+  | 'odt'
+  | 'ods'
+  | 'docx'
+  | 'pptx'
+  | 'pdf'
+  | 'xlsx'
+  | 'xls';
 
 interface ReportParams {
-  id: string,
-  format?: ReportFormat,
-  params?: { [key in string]: string },
-  att?: boolean,
-  origin?: string
+  id: string;
+  format?: ReportFormat;
+  params?: { [key in string]: string };
+  att?: boolean;
+  origin?: string;
 }
 
 class Rs {
@@ -80,16 +93,22 @@ class Rs {
     }
   }
   report(param: ReportParams) {
-    return `${param.origin || window.location.origin}/rs/rpt/${param.id}/${param.format || 'pdf'}${param.att
-      ? '/att'
-      : ''}${Object.keys(param.params || {}).length > 0
-        ? `?${Object.entries(param.params || {}).map(e => `${e[0]}=${e[1]}`).join('&')}`
-        : ''}`
+    return `${param.origin || window.location.origin}/rs/rpt/${
+      param.id
+    }/${param.format || 'pdf'}${param.att ? '/att' : ''}${
+      Object.keys(param.params || {}).length > 0
+        ? `?${Object.entries(param.params || {})
+            .map(e => `${e[0]}=${e[1]}`)
+            .join('&')}`
+        : ''
+    }`;
   }
-  stash(id: string, att: boolean = false, orgin: string = window.location.origin) {
-    return `${origin}/rs/stash/${id}${att
-      ? '/att'
-      : ''}`
+  stash(
+    id: string,
+    att: boolean = false,
+    origin: string = window.location.origin
+  ) {
+    return `${origin}/rs/stash/${id}${att ? '/att' : ''}`;
   }
 }
 
